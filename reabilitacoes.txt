@@ -1,0 +1,100 @@
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 10 dias
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 10 dias
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Psicoterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 10 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 1 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 1 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 1 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 100 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 120 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 100 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 120 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 1 minutos
+
+Tratamento: Fisioterapia
+EspÈcie: Nome: pepe, Peso: 150.0KG EspÈcie: JacarÈ
+Tempo Necess·rio: 100 minutos
+
+Tratamento: Terapia Ocupacional
+Esp√©cie: Nome: Yuki, Peso: 2.0KG Esp√©cie: Gato
+Tempo Necess√°rio: 1 minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio:  minutos
+
+Tratamento: Fisioterapia
+Esp√©cie: Nome: pepe, Peso: 150.0KG Esp√©cie: Jacar√©
+Tempo Necess√°rio: 12 minutos
+

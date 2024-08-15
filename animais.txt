@@ -1,0 +1,5 @@
+Nome: pepe, Idade: 10, Peso: 150.0, Espécie: Jacaré, Possui Necessidades: false, Necessidades: ,true
+Nome: ricardo, Idade: 13, Peso: 21.0, Espécie: rara, Possui Necessidades: false, Necessidades: ,true
+Nome: Valdemar, Idade: 55, Peso: 150.0, Esp�cie: Veado, Possui Necessidades: false, Necessidades: ,Pequeno,12
+Nome: teeeeste, Idade: 22, Peso: 100.0, Espécie: jacare, Possui Necessidades: false, Necessidades: ,true
+Nome: Yuki, Idade: 2, Peso: 2.0, Espécie: Gato, Possui Necessidades: false, Necessidades: ,Pequeno,4

@@ -1,0 +1,32 @@
+Nome: testeeee
+Idade: 24
+Salário: 1000
+Cargo: Cuidador
+
+Nome: testearthur
+Idade: 19
+Salário: 2000
+Cargo: Cuidador
+
+Nome: Marina
+Idade: 25
+Salário: 5000
+Cargo: Cuidador
+
+Nome: Eduardo
+Idade: 30
+Salário: 3000
+Cargo: Veterinário
+
+Nome: Nicolas
+Idade: 25
+Salário: 1500
+Cargo: Cuidador
+Experiência: Sim
+
+Nome: Eduardo 
+Idade: 25
+Salário: 3000
+Cargo: Veterinário
+Especialização: ortopedica 
+
