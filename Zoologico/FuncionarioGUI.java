@@ -76,12 +76,11 @@ public class FuncionarioGUI extends JFrame {
                 String email = emailField.getText();
                 String cargo = "";
 
-
-                RegexEmailValidator validar = new RegexEmailValidator();
-                if(validar.isValid(email) != true){
-                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha com um email valido.");
-                }
-                else{
+                // Usa o adaptador de validação de email
+                ValidadorEmailAdapter validar = new RegexEmailValidator();
+                if (!validar.isValid(email)) {
+                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha com um email válido.");
+                } else {
                     // Determina o cargo selecionado
                     if (veterinarioCheckBox.isSelected()) {
                         cargo = "Veterinário";
@@ -127,8 +126,8 @@ public class FuncionarioGUI extends JFrame {
                     // Exibir mensagem de cadastro bem-sucedido
                     JOptionPane.showMessageDialog(FuncionarioGUI.this, "Funcionário cadastrado com sucesso!");
                 }
-            }});
- 
+            }
+        });
 
         // Configuração da tela
         JPanel panel = new JPanel();
