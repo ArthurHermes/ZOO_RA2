@@ -33,8 +33,8 @@ public class Vacina {
         return lote;
     }
 
-    public String getValidade() {
-        return validade;
+    public String Validade(){
+        return "A vacina " + nome + " é válida até " + validade + ".";
     }
 
     public int getQuantidadeDisponivel() {
