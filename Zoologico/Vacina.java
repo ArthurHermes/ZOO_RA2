@@ -5,16 +5,16 @@ public class Vacina {
     private String validade;
     private String lote;
     private int quantidadeDisponivel;
-    
+    private VacinaStrategy strategy;
 
-
-    public Vacina(String nome, String descricao, String fabricante, String validade, String lote, int quantidadeDisponivel) {
+    public Vacina(String nome, String descricao, String fabricante, String validade, String lote, int quantidadeDisponivel, VacinaStrategy strategy) {
         this.nome = nome;
         this.descricao = descricao;
         this.fabricante = fabricante;
         this.validade = validade;
         this.lote = lote;
-        this.quantidadeDisponivel = quantidadeDisponivel;   
+        this.quantidadeDisponivel = quantidadeDisponivel;
+        this.strategy = strategy;
     }
 
     public String getNome() {
@@ -29,34 +29,29 @@ public class Vacina {
         return fabricante;
     }
 
-
     public String getLote() {
         return lote;
     }
-    
-    public void vacinando(){
-        System.out.println("Vacina: " + nome );
-        
-    }
 
-    public String Validade(){
-        return  validade = "6 meses";
-    }
-
-    public String administrarDose() {
-        if (quantidadeDisponivel > 0) {
-            quantidadeDisponivel--;
-            return "Uma dose de " + nome + " foi administrada. Restam " + quantidadeDisponivel + " doses.";
-        } else {
-            return "Não há vacinas disponíveis para " + nome + " no momento.";
-        }
+    public String getValidade() {
+        return validade;
     }
 
     public int getQuantidadeDisponivel() {
         return quantidadeDisponivel;
     }
 
-    
+    public void diminuirDose() {
+        if (quantidadeDisponivel > 0){
+        quantidadeDisponivel--;
+        }
+    }
 
+    public String administrarDose() {
+        return strategy.administrar(this); // Usando strategy para administrar a dose
+    }
 
+    public void vacinando() {
+        System.out.println("Vacina: " + nome);
+    }
 }
