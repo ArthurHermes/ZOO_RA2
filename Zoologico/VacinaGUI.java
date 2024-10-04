@@ -8,12 +8,19 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Interface de estratégia
+interface VacinaStrategy {
+    String administrar(Vacina vacina);
+}
+
+// Classe principal da GUI
 public class VacinaGUI extends JFrame {
     private JTextField nomeField;
     private JComboBox<String> especieComboBox;
     private JButton vacinarButton;
     private JTextField dosesField;
     private JButton backButton;
+    private JComboBox<VacinaStrategy> strategyComboBox; // ComboBox para as estratégias
 
     public VacinaGUI() {
         super("Vacinação");
@@ -26,17 +33,9 @@ public class VacinaGUI extends JFrame {
 
         // Adicionar validação ao nomeField para não aceitar números
         nomeField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {
-                validateNomeField();
-            }
-
-            public void removeUpdate(DocumentEvent e) {
-                validateNomeField();
-            }
-
-            public void changedUpdate(DocumentEvent e) {
-                validateNomeField();
-            }
+            public void insertUpdate(DocumentEvent e) { validateNomeField(); }
+            public void removeUpdate(DocumentEvent e) { validateNomeField(); }
+            public void changedUpdate(DocumentEvent e) { validateNomeField(); }
 
             private void validateNomeField() {
                 SwingUtilities.invokeLater(() -> {
@@ -55,17 +54,9 @@ public class VacinaGUI extends JFrame {
 
         // Adicionar validação ao dosesField para aceitar apenas números
         dosesField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {
-                validateDosesField();
-            }
-
-            public void removeUpdate(DocumentEvent e) {
-                validateDosesField();
-            }
-
-            public void changedUpdate(DocumentEvent e) {
-                validateDosesField();
-            }
+            public void insertUpdate(DocumentEvent e) { validateDosesField(); }
+            public void removeUpdate(DocumentEvent e) { validateDosesField(); }
+            public void changedUpdate(DocumentEvent e) { validateDosesField(); }
 
             private void validateDosesField() {
                 SwingUtilities.invokeLater(() -> {
@@ -86,6 +77,11 @@ public class VacinaGUI extends JFrame {
         List<String> especies = carregarEspecies("animais.txt");
         especieComboBox = new JComboBox<>(especies.toArray(new String[0]));
 
+        // Criar o ComboBox para selecionar a estratégia
+        strategyComboBox = new JComboBox<>();
+        strategyComboBox.addItem(new VacinaPadraoStrategy()); // Adiciona estratégia padrão
+        strategyComboBox.addItem(new VacinaEspecialStrategy()); // Adiciona estratégia especial
+
         // Adicionar listener para o botão
         vacinarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +101,8 @@ public class VacinaGUI extends JFrame {
         panel.add(dosesField);
         panel.add(new JLabel("Espécie:"));
         panel.add(especieComboBox);
+        panel.add(new JLabel("Estratégia de Administração:"));
+        panel.add(strategyComboBox); // Adiciona o combo box de estratégia à GUI
         panel.add(backButton);
         panel.add(vacinarButton);
 
@@ -119,7 +117,7 @@ public class VacinaGUI extends JFrame {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new telaInicial();
+                new telaInicial(); // Substitua com a tela inicial apropriada
             }
         });
     }
@@ -128,7 +126,8 @@ public class VacinaGUI extends JFrame {
         String nomeVacina = nomeField.getText();
         String especieSelecionada = (String) especieComboBox.getSelectedItem();
         String doses = dosesField.getText();
-        
+        VacinaStrategy selectedStrategy = (VacinaStrategy) strategyComboBox.getSelectedItem(); // Obtém a estratégia selecionada
+
         if (nomeVacina.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, preencha o campo de nome.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
@@ -139,12 +138,14 @@ public class VacinaGUI extends JFrame {
             return;
         }
 
-        int numeroDeDoses = 50; // Defina o número de doses manualmente
-        
-        Vacina v = new Vacina(nomeVacina, "descricao", "fabricante", "validade", "lote", numeroDeDoses);
-        // Chamar o método administrarDose e capturar a mensagem de resultado
-        String resultado = v.administrarDose();
-        String validade = v.Validade();
+        int numeroDeDoses = Integer.parseInt(doses); // Converte doses para inteiro
+
+        // Cria a vacina com a estratégia selecionada
+        Vacina vacina = new Vacina(nomeVacina, "descrição", "fabricante", "validade", "lote", numeroDeDoses, selectedStrategy);
+
+        // Usar a estratégia para administrar a dose
+        String resultado = vacina.administrarDose();
+        String validade = vacina.Validade();
         JOptionPane.showMessageDialog(null, resultado);
         JOptionPane.showMessageDialog(null, validade);
 
@@ -196,5 +197,84 @@ public class VacinaGUI extends JFrame {
                 new VacinaGUI();
             }
         });
+    }
+
+    // Estratégia para vacinas padrão
+    public static class VacinaPadraoStrategy implements VacinaStrategy {
+        @Override
+        public String administrar(Vacina vacina) {
+            if (vacina.getQuantidadeDisponivel() > 0) {
+                vacina.diminuirDose();
+                return "Uma dose de " + vacina.getNome() + " foi administrada. Restam " + vacina.getQuantidadeDisponivel() + " doses.";
+            } else {
+                return "Não há vacinas disponíveis para " + vacina.getNome() + " no momento.";
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Vacina Padrão";  // Nome exibido no JComboBox
+        }
+    }
+
+    // Estratégia para vacinas com procedimento especial
+    public static class VacinaEspecialStrategy implements VacinaStrategy {
+        @Override
+        public String administrar(Vacina vacina) {
+            if (vacina.getQuantidadeDisponivel() > 0) {
+                vacina.diminuirDose();
+                return "Uma dose especial de " + vacina.getNome() + " foi administrada com procedimento especial. Restam " + vacina.getQuantidadeDisponivel() + " doses.";
+            } else {
+                return "Não há vacinas especiais disponíveis para " + vacina.getNome() + " no momento.";
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Vacina Especial";  // Nome exibido no JComboBox
+        }
+    }
+}
+
+// Classe Vacina (apenas um exemplo; deve ser adaptada conforme sua implementação)
+class Vacina {
+    private String nome;
+    private String descricao;
+    private String fabricante;
+    private String validade;
+    private String lote;
+    private int quantidadeDisponivel;
+    private VacinaStrategy estrategia;
+
+    public Vacina(String nome, String descricao, String fabricante, String validade, String lote, int quantidadeDisponivel, VacinaStrategy estrategia) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.fabricante = fabricante;
+        this.validade = validade;
+        this.lote = lote;
+        this.quantidadeDisponivel = quantidadeDisponivel;
+        this.estrategia = estrategia;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getQuantidadeDisponivel() {
+        return quantidadeDisponivel;
+    }
+
+    public void diminuirDose() {
+        if (quantidadeDisponivel > 0) {
+            quantidadeDisponivel--;
+        }
+    }
+
+    public String administrarDose() {
+        return estrategia.administrar(this);
+    }
+
+    public String Validade() {
+        return "A vacina " + nome + " é válida até " + validade + ".";
     }
 }
