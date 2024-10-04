@@ -7,6 +7,7 @@ public class FuncionarioGUI extends JFrame {
     private JTextField nomeField;
     private JTextField idadeField;
     private JTextField salarioField;
+    private JTextField emailField;
     private JCheckBox veterinarioCheckBox;
     private JTextField especializacaoField;
     private JCheckBox cuidadorCheckBox;
@@ -23,6 +24,7 @@ public class FuncionarioGUI extends JFrame {
         nomeField = new JTextField(20);
         idadeField = new JTextField(20);
         salarioField = new JTextField(20);
+        emailField = new JTextField(20);
         cadastrarButton = new JButton("Cadastrar");
         backButton = new JButton("Voltar");
 
@@ -71,53 +73,62 @@ public class FuncionarioGUI extends JFrame {
                 String nome = nomeField.getText();
                 String idade = idadeField.getText();
                 String salario = salarioField.getText();
+                String email = emailField.getText();
                 String cargo = "";
 
-                // Determina o cargo selecionado
-                if (veterinarioCheckBox.isSelected()) {
-                    cargo = "Veterinário";
-                } else if (cuidadorCheckBox.isSelected()) {
-                    cargo = "Cuidador";
+
+                RegexEmailValidator validar = new RegexEmailValidator();
+                if(validar.isValid(email) != true){
+                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha com um email valido.");
                 }
+                else{
+                    // Determina o cargo selecionado
+                    if (veterinarioCheckBox.isSelected()) {
+                        cargo = "Veterinário";
+                    } else if (cuidadorCheckBox.isSelected()) {
+                        cargo = "Cuidador";
+                    }
 
-                // Se o cargo for Veterinário, pega a especialização
-                String especializacao = "";
-                if (veterinarioCheckBox.isSelected()) {
-                    especializacao = especializacaoField.getText();
+                    // Se o cargo for Veterinário, pega a especialização
+                    String especializacao = "";
+                    if (veterinarioCheckBox.isSelected()) {
+                        especializacao = especializacaoField.getText();
+                    }
+
+                    // Se o cargo for Cuidador, determina a experiência
+                    String experiencia = "";
+                    if (cuidadorCheckBox.isSelected()) {
+                        experiencia = simRadioButton.isSelected() ? "Sim" : "Não";
+                    }
+
+                    // Verifica se todos os campos obrigatórios foram preenchidos
+                    if (nome.isEmpty() || idade.isEmpty() || salario.isEmpty() || cargo.isEmpty()) {
+                        JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha todos os campos obrigatórios.");
+                        return;
+                    }
+
+                    // Salva os dados do funcionário
+                    salvarFuncionario("funcionarios.txt", nome, idade, salario, cargo, especializacao, experiencia, email);
+
+                    // Limpa os campos
+                    nomeField.setText("");
+                    idadeField.setText("");
+                    salarioField.setText("");
+                    emailField.setText("");
+                    veterinarioCheckBox.setSelected(false);
+                    cuidadorCheckBox.setSelected(false);
+                    especializacaoField.setText("");
+                    especializacaoField.setEnabled(false);
+                    simRadioButton.setSelected(false);
+                    naoRadioButton.setSelected(false);
+                    simRadioButton.setEnabled(false);
+                    naoRadioButton.setEnabled(false);
+
+                    // Exibir mensagem de cadastro bem-sucedido
+                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Funcionário cadastrado com sucesso!");
                 }
-
-                // Se o cargo for Cuidador, determina a experiência
-                String experiencia = "";
-                if (cuidadorCheckBox.isSelected()) {
-                    experiencia = simRadioButton.isSelected() ? "Sim" : "Não";
-                }
-
-                // Verifica se todos os campos obrigatórios foram preenchidos
-                if (nome.isEmpty() || idade.isEmpty() || salario.isEmpty() || cargo.isEmpty()) {
-                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha todos os campos obrigatórios.");
-                    return;
-                }
-
-                // Salva os dados do funcionário
-                salvarFuncionario("funcionarios.txt", nome, idade, salario, cargo, especializacao, experiencia);
-
-                // Limpa os campos
-                nomeField.setText("");
-                idadeField.setText("");
-                salarioField.setText("");
-                veterinarioCheckBox.setSelected(false);
-                cuidadorCheckBox.setSelected(false);
-                especializacaoField.setText("");
-                especializacaoField.setEnabled(false);
-                simRadioButton.setSelected(false);
-                naoRadioButton.setSelected(false);
-                simRadioButton.setEnabled(false);
-                naoRadioButton.setEnabled(false);
-
-                // Exibir mensagem de cadastro bem-sucedido
-                JOptionPane.showMessageDialog(FuncionarioGUI.this, "Funcionário cadastrado com sucesso!");
-            }
-        });
+            }});
+ 
 
         // Configuração da tela
         JPanel panel = new JPanel();
@@ -128,6 +139,8 @@ public class FuncionarioGUI extends JFrame {
         panel.add(idadeField);
         panel.add(new JLabel("Salário:"));
         panel.add(salarioField);
+        panel.add(new JLabel("Email: "));
+        panel.add(emailField);
         panel.add(new JLabel("Cargo:"));
         panel.add(veterinarioCheckBox);
         panel.add(new JLabel(""));
@@ -157,13 +170,15 @@ public class FuncionarioGUI extends JFrame {
         });
     }
 
-    private void salvarFuncionario(String arquivo, String nome, String idade, String salario, String cargo, String especializacao, String experiencia) {
+    private void salvarFuncionario(String arquivo, String nome, String idade, String salario, String cargo, String especializacao, String experiencia, String email) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo, true))) {
             writer.write("Nome: " + nome);
             writer.newLine();
             writer.write("Idade: " + idade);
             writer.newLine();
             writer.write("Salário: " + salario);
+            writer.newLine();
+            writer.write("Email: " + email);
             writer.newLine();
             writer.write("Cargo: " + cargo);
             writer.newLine();
