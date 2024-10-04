@@ -19,6 +19,7 @@ public class VacinaGUI extends JFrame {
     private JComboBox<String> especieComboBox;
     private JButton vacinarButton;
     private JTextField dosesField;
+    private JTextField validadeField; // Novo campo para validade
     private JButton backButton;
     private JComboBox<VacinaStrategy> strategyComboBox; // ComboBox para as estratégias
 
@@ -29,6 +30,7 @@ public class VacinaGUI extends JFrame {
         nomeField = new JTextField(20);
         vacinarButton = new JButton("Vacinando");
         dosesField = new JTextField(20);
+        validadeField = new JTextField(10); // Inicializa o novo campo de validade
         backButton = new JButton("Voltar");
 
         // Adicionar validação ao nomeField para não aceitar números
@@ -72,6 +74,26 @@ public class VacinaGUI extends JFrame {
                 });
             }
         });
+        // Adicionar validação ao validadeField para aceitar apenas números
+        validadeField.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { validateValidadeField(); }
+            public void removeUpdate(DocumentEvent e) { validateValidadeField(); }
+            public void changedUpdate(DocumentEvent e) { validateValidadeField(); }
+
+            private void validateValidadeField() {
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        String text = validadeField.getText(0, validadeField.getDocument().getLength());
+                        if (!text.matches("\\d*")) { // Permite apenas números
+                            JOptionPane.showMessageDialog(VacinaGUI.this, "Entrada inválida. Por favor, insira apenas números.");
+                            validadeField.setText(text.replaceAll("[^\\d]", ""));
+                        }
+                    } catch (BadLocationException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        });
 
         // Carregar as opções dos animais a partir do arquivo txt
         List<String> especies = carregarEspecies("animais.txt");
@@ -99,6 +121,8 @@ public class VacinaGUI extends JFrame {
         panel.add(nomeField);
         panel.add(new JLabel("Doses:"));
         panel.add(dosesField);
+        panel.add(new JLabel("Validade em Meses:")); // Rótulo para o novo campo
+        panel.add(validadeField); // Adiciona o campo de validade
         panel.add(new JLabel("Espécie:"));
         panel.add(especieComboBox);
         panel.add(new JLabel("Estratégia de Administração:"));
@@ -126,6 +150,7 @@ public class VacinaGUI extends JFrame {
         String nomeVacina = nomeField.getText();
         String especieSelecionada = (String) especieComboBox.getSelectedItem();
         String doses = dosesField.getText();
+        String validade = validadeField.getText(); // Captura a validade do campo
         VacinaStrategy selectedStrategy = (VacinaStrategy) strategyComboBox.getSelectedItem(); // Obtém a estratégia selecionada
 
         if (nomeVacina.isEmpty()) {
@@ -138,22 +163,26 @@ public class VacinaGUI extends JFrame {
             return;
         }
 
+        if (validade.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, preencha o campo de validade.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int numeroDeDoses = Integer.parseInt(doses); // Converte doses para inteiro
 
         // Cria a vacina com a estratégia selecionada
-        Vacina vacina = new Vacina(nomeVacina, "descrição", "fabricante", "validade", "lote", numeroDeDoses, selectedStrategy);
+        Vacina vacina = new Vacina(nomeVacina, "descrição", "fabricante", validade, "lote", numeroDeDoses, selectedStrategy); // Passa a validade
 
         // Usar a estratégia para administrar a dose
         String resultado = vacina.administrarDose();
-        String validade = vacina.Validade();
         JOptionPane.showMessageDialog(null, resultado);
-        JOptionPane.showMessageDialog(null, validade);
 
-        salvarVacina("vacinas.txt", nomeVacina, especieSelecionada, doses);
+        salvarVacina("vacinas.txt", nomeVacina, especieSelecionada, doses, validade); // Salva a vacina incluindo a validade
 
         // Limpar os campos
         nomeField.setText("");
         dosesField.setText("");
+        validadeField.setText(""); // Limpa o campo de validade
         especieComboBox.setSelectedIndex(0);
     }
 
@@ -177,13 +206,15 @@ public class VacinaGUI extends JFrame {
         return especies;
     }
 
-    private void salvarVacina(String arquivo, String nomeVacina, String especie, String doses) {
+    private void salvarVacina(String arquivo, String nomeVacina, String especie, String doses, String validade) { // Inclui validade no método
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo, true))) {
             writer.write("Nome da Vacina: " + nomeVacina);
             writer.newLine();
             writer.write("Espécie: " + especie);
             writer.newLine();
             writer.write("Doses: " + doses);
+            writer.newLine();
+            writer.write("Validade: " + validade); // Salva a validade no arquivo
             writer.newLine();
             writer.newLine();
         } catch (IOException e) {
