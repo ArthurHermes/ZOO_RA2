@@ -18,3 +18,7 @@ Alimento: Carnedeporco
 Espécie: Nome: pepe, Peso: 150.0KG Espécie: Jacaré
 Funcionário: testeeee, Cuidador
 Quantidade: 5Kg
+Alimento: Carnedeporco
+Espécie: Nome: teeeeste, Peso: 100.0KG Espécie: jacare
+Funcionário: testeeee, Cuidador
+Quantidade: 10Kg
