@@ -234,35 +234,28 @@ public class VacinaGUI extends JFrame {
     public static class VacinaPadraoStrategy implements VacinaStrategy {
         @Override
         public String administrar(Vacina vacina) {
-            if (vacina.getQuantidadeDisponivel() > 0) {
-                vacina.diminuirDose();
-                return "Uma dose de " + vacina.getNome() + " foi administrada. Restam " + vacina.getQuantidadeDisponivel() + " doses.";
-            } else {
-                return "Não há vacinas disponíveis para " + vacina.getNome() + " no momento.";
-            }
+            vacina.diminuirDose();
+            return "Uma dose de " + vacina.getNome() + " foi administrada.";
         }
-
+    
         @Override
         public String toString() {
             return "Vacina Padrão";  // Nome exibido no JComboBox
         }
     }
-
+    
     // Estratégia para vacinas com procedimento especial
     public static class VacinaEspecialStrategy implements VacinaStrategy {
         @Override
         public String administrar(Vacina vacina) {
-            if (vacina.getQuantidadeDisponivel() > 0) {
-                vacina.diminuirDose();
-                return "Uma dose especial de " + vacina.getNome() + " foi administrada com procedimento especial. Restam " + vacina.getQuantidadeDisponivel() + " doses.";
-            } else {
-                return "Não há vacinas especiais disponíveis para " + vacina.getNome() + " no momento.";
-            }
+            vacina.diminuirDose();
+            return "Uma dose especial de " + vacina.getNome() + " foi administrada com procedimento especial.";
         }
+    }
+    
 
         @Override
         public String toString() {
             return "Vacina Especial";  // Nome exibido no JComboBox
         }
     }
-}

@@ -37,10 +37,6 @@ public class Vacina {
         return "A vacina " + nome + " é válida até " + validade + ".";
     }
 
-    public int getQuantidadeDisponivel() {
-        return quantidadeDisponivel;
-    }
-
     public void diminuirDose() {
         if (quantidadeDisponivel > 0){
         quantidadeDisponivel--;
