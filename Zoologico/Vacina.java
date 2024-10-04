@@ -41,11 +41,12 @@ public class Vacina {
         return quantidadeDisponivel;
     }
 
-    // Método que diminui a dose
     public void diminuirDose() {
+        if (quantidadeDisponivel > 0){
         quantidadeDisponivel--;
+        }
     }
-    
+
     public String administrarDose() {
         return strategy.administrar(this); // Usando strategy para administrar a dose
     }
