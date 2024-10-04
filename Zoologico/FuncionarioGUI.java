@@ -3,6 +3,28 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
+// Interface de validação de e-mail
+interface EmailValidator {
+    boolean isValid(String email);
+}
+
+// Implementação da validação de e-mail usando regex
+class RegexEmailValidator implements EmailValidator {
+    @Override
+    public boolean isValid(String email) {
+        return email.matches("^[\\w-\\.]+@[\\w-]+\\.[a-z]{2,}$");
+    }
+}
+
+// Validador de e-mail estilo Google
+class GoogleEmailValidator implements EmailValidator {
+    @Override
+    public boolean isValid(String email) {
+        // Simulação de verificação, você deve substituir isso por uma chamada real a uma API, se disponível
+        return email.endsWith("@gmail.com"); // Aceita apenas e-mails do Gmail
+    }
+}
+
 public class FuncionarioGUI extends JFrame {
     private JTextField nomeField;
     private JTextField idadeField;
@@ -16,9 +38,13 @@ public class FuncionarioGUI extends JFrame {
     private ButtonGroup experienciaGroup;
     private JButton cadastrarButton;
     private JButton backButton;
+    private EmailValidator emailValidator;
 
     public FuncionarioGUI() {
         super("Cadastro de Funcionário");
+
+        // Inicialização dos validadores
+        emailValidator = new GoogleEmailValidator(); // Trocar pelo GoogleEmailValidator
 
         // Criação dos componentes
         nomeField = new JTextField(20);
@@ -76,56 +102,56 @@ public class FuncionarioGUI extends JFrame {
                 String email = emailField.getText();
                 String cargo = "";
 
-                // Usa o adaptador de validação de email
-                ValidadorEmailAdapter validar = new RegexEmailValidator();
-                if (!validar.isValid(email)) {
-                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha com um email válido.");
-                } else {
-                    // Determina o cargo selecionado
-                    if (veterinarioCheckBox.isSelected()) {
-                        cargo = "Veterinário";
-                    } else if (cuidadorCheckBox.isSelected()) {
-                        cargo = "Cuidador";
-                    }
-
-                    // Se o cargo for Veterinário, pega a especialização
-                    String especializacao = "";
-                    if (veterinarioCheckBox.isSelected()) {
-                        especializacao = especializacaoField.getText();
-                    }
-
-                    // Se o cargo for Cuidador, determina a experiência
-                    String experiencia = "";
-                    if (cuidadorCheckBox.isSelected()) {
-                        experiencia = simRadioButton.isSelected() ? "Sim" : "Não";
-                    }
-
-                    // Verifica se todos os campos obrigatórios foram preenchidos
-                    if (nome.isEmpty() || idade.isEmpty() || salario.isEmpty() || cargo.isEmpty()) {
-                        JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha todos os campos obrigatórios.");
-                        return;
-                    }
-
-                    // Salva os dados do funcionário
-                    salvarFuncionario("funcionarios.txt", nome, idade, salario, cargo, especializacao, experiencia, email);
-
-                    // Limpa os campos
-                    nomeField.setText("");
-                    idadeField.setText("");
-                    salarioField.setText("");
-                    emailField.setText("");
-                    veterinarioCheckBox.setSelected(false);
-                    cuidadorCheckBox.setSelected(false);
-                    especializacaoField.setText("");
-                    especializacaoField.setEnabled(false);
-                    simRadioButton.setSelected(false);
-                    naoRadioButton.setSelected(false);
-                    simRadioButton.setEnabled(false);
-                    naoRadioButton.setEnabled(false);
-
-                    // Exibir mensagem de cadastro bem-sucedido
-                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Funcionário cadastrado com sucesso!");
+                // Validação de e-mail
+                if (!emailValidator.isValid(email)) {
+                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha com um email válido (apenas Gmail permitido).");
+                    return;
                 }
+
+                // Determina o cargo selecionado
+                if (veterinarioCheckBox.isSelected()) {
+                    cargo = "Veterinário";
+                } else if (cuidadorCheckBox.isSelected()) {
+                    cargo = "Cuidador";
+                }
+
+                // Se o cargo for Veterinário, pega a especialização
+                String especializacao = "";
+                if (veterinarioCheckBox.isSelected()) {
+                    especializacao = especializacaoField.getText();
+                }
+
+                // Se o cargo for Cuidador, determina a experiência
+                String experiencia = "";
+                if (cuidadorCheckBox.isSelected()) {
+                    experiencia = simRadioButton.isSelected() ? "Sim" : "Não";
+                }
+
+                // Verifica se todos os campos obrigatórios foram preenchidos
+                if (nome.isEmpty() || idade.isEmpty() || salario.isEmpty() || cargo.isEmpty()) {
+                    JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha todos os campos obrigatórios.");
+                    return;
+                }
+
+                // Salva os dados do funcionário
+                salvarFuncionario("funcionarios.txt", nome, idade, salario, cargo, especializacao, experiencia, email);
+
+                // Limpa os campos
+                nomeField.setText("");
+                idadeField.setText("");
+                salarioField.setText("");
+                emailField.setText("");
+                veterinarioCheckBox.setSelected(false);
+                cuidadorCheckBox.setSelected(false);
+                especializacaoField.setText("");
+                especializacaoField.setEnabled(false);
+                simRadioButton.setSelected(false);
+                naoRadioButton.setSelected(false);
+                simRadioButton.setEnabled(false);
+                naoRadioButton.setEnabled(false);
+
+                // Exibir mensagem de cadastro bem-sucedido
+                JOptionPane.showMessageDialog(FuncionarioGUI.this, "Funcionário cadastrado com sucesso!");
             }
         });
 
@@ -164,7 +190,7 @@ public class FuncionarioGUI extends JFrame {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new telaInicial();  
+                new telaInicial();
             }
         });
     }
