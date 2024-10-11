@@ -76,9 +76,9 @@ public class FuncionarioGUI extends JFrame {
                 String email = emailField.getText();
                 String cargo = "";
 
-                // Usa o adaptador de validação de email
-                ValidadorEmailAdapter validar = new RegexEmailValidator();
-                if (!validar.isValid(email)) {
+                ValidadorEmailAdapter regexValidator = new RegexEmailValidator();
+                EmailValidationService validationService = new EmailValidationService(regexValidator);
+                if (!validationService.validateEmail(email)) {
                     JOptionPane.showMessageDialog(FuncionarioGUI.this, "Por favor, preencha com um email válido.");
                 } else {
                     // Determina o cargo selecionado

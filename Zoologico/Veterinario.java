@@ -1,8 +1,8 @@
 public class Veterinario extends Funcionario {
     private String especializacao;
 
-    public Veterinario(String nome, int hrEscala, int idade, float salario, String especializacao) {
-        super(nome, hrEscala, idade, salario);
+    public Veterinario(String nome, int hrEscala, int idade, float salario, String email, String especializacao) {
+        super(nome, hrEscala, idade, salario, email);
         this.especializacao = especializacao;
     }
 
