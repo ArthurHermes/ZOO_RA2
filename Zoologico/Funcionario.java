@@ -5,7 +5,7 @@ public class Funcionario {
     private float salario;
     private String email;
 
-    public Funcionario(String nome, int hrEscala, int idade, float salario, String email){
+    public Funcionario(String nome, int hrEscala, int idade, float salario, String email) {
         this.nome = nome;
         this.hrEscala = hrEscala;
         this.idade = idade;
@@ -29,13 +29,12 @@ public class Funcionario {
         return idade;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
     @Override
     public String toString() {
-        return "Nome: " + nome + ", Idade: " + idade + ", Hora Escala: " + hrEscala + ", Salario: " + salario + ", Email:" + email;
+        return "Nome: " + nome + ", Idade: " + idade + ", Hora Escala: " + hrEscala + ", Salario: " + salario + ", Email: " + email;
     }
-
 }
