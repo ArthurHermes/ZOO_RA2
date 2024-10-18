@@ -240,7 +240,7 @@ public class VacinaGUI extends JFrame {
     
         @Override
         public String toString() {
-            return "Vacina Padrão";  // Nome exibido no JComboBox
+            return "Vacina Padrão"; 
         }
     }
     
@@ -256,6 +256,6 @@ public class VacinaGUI extends JFrame {
 
         @Override
         public String toString() {
-            return "Vacina Especial";  // Nome exibido no JComboBox
+            return "Vacina Especial";  
         }
     }
